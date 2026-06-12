@@ -33,7 +33,7 @@ def get_static_path(filename):
     # 3 ngóc ngách mà Vercel thường giấu file
     possible_paths = [
         os.path.join(root_dir, "public", filename),           # Nằm ngoài Root (Khuyên dùng)
-        os.path.join(current_dir, "public", filename),        # Nằm trong api/
+  
         os.path.join(current_dir, "..", "public", filename)   # Nằm lùi lại 1 thư mục
     ]
     
