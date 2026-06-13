@@ -1,85 +1,42 @@
-/**
- * SECURITY MODULE 1: RATE LIMIT & DSTAT MONITOR
- */
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-DDoS Secure Portal - Dstat</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <div id="particles-container"></div>
 
-const AntiDDoS_Module1 = {
-    // --- Các biến lưu trữ dữ liệu Dstat ---
-    stats: {
-        totalRequests: 0,
-        requestsThisSecond: 0,
-        currentRPS: 0,
-        totalErrors: 0
-    },
+    <div class="dstat-panel">
+        <div class="dstat-header">LIVE TRAFFIC MONITOR</div>
+        <div class="dstat-stats">
+            <div class="stat-box">
+                <span class="stat-label">Tổng Request</span>
+                <span class="stat-value" id="dstat-total">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Req / Giây (RPS)</span>
+                <span class="stat-value" id="dstat-rps">0</span>
+            </div>
+            <div class="stat-box error-box">
+                <span class="stat-label">Truy cập lỗi/Chặn</span>
+                <span class="stat-value" id="dstat-errors">0</span>
+            </div>
+        </div>
+    </div>
 
-    // --- Cấu hình giới hạn ---
-    config: {
-        maxRequestsPerSecond: 3 // Giới hạn 3 req/s
-    },
+    <div class="secure-card-wrapper">
+        <div class="secure-card-inner">
+            <h2>Hệ Thống Bảo Mật</h2>
+            <p>Vui lòng xác thực để tiếp tục</p>
+            <input type="text" class="cool-input" placeholder="Nhập mã truy cập...">
+            <button class="cool-button" id="verify-btn">Gửi Request</button>
+        </div>
+    </div>
 
-    // --- Các DOM Elements để update UI ---
-    ui: {
-        elTotal: null,
-        elRps: null,
-        elErrors: null
-    },
-
-    init: function() {
-        // Gắn element
-        this.ui.elTotal = document.getElementById('dstat-total');
-        this.ui.elRps = document.getElementById('dstat-rps');
-        this.ui.elErrors = document.getElementById('dstat-errors');
-
-        // Bắt đầu vòng lặp tính toán RPS mỗi giây
-        setInterval(() => this.calculateRPS(), 1000);
-
-        // Lắng nghe sự kiện click từ nút gửi
-        const btn = document.getElementById('verify-btn');
-        if (btn) {
-            btn.addEventListener('click', (e) => {
-                this.handleIncomingRequest(e);
-            });
-        }
-    },
-
-    handleIncomingRequest: function(event) {
-        this.stats.totalRequests++;
-        this.stats.requestsThisSecond++;
-
-        // Kiểm tra Rate Limit
-        if (this.stats.requestsThisSecond > this.config.maxRequestsPerSecond) {
-            event.preventDefault(); // Chặn hành động
-            this.stats.totalErrors++; // Cộng vào truy cập lỗi
-            
-            // Có thể thêm hiệu ứng rung lắc nút ở đây nếu muốn
-            console.warn("DSTAT: Blocked spam request!");
-        } else {
-            console.log("DSTAT: Request accepted.");
-            // Chỗ này xử lý logic thành công (gọi API thực tế)
-        }
-
-        // Cập nhật giao diện ngay lập tức
-        this.updateUI();
-    },
-
-    calculateRPS: function() {
-        // Gán RPS bằng số request của giây vừa rồi
-        this.stats.currentRPS = this.stats.requestsThisSecond;
-        
-        // Reset biến đếm giây mới
-        this.stats.requestsThisSecond = 0;
-        
-        this.updateUI();
-    },
-
-    updateUI: function() {
-        if (!this.ui.elTotal) return;
-        
-        this.ui.elTotal.innerText = this.stats.totalRequests.toLocaleString();
-        this.ui.elRps.innerText = this.stats.currentRPS;
-        this.ui.elErrors.innerText = this.stats.totalErrors.toLocaleString();
-    }
-};
-
-document.addEventListener('DOMContentLoaded', () => {
-    AntiDDoS_Module1.init();
-});
+    <script src="security_modules/fixattack1.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
