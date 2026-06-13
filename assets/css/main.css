@@ -84,3 +84,60 @@ body { background-color: #0b0f19; height: 100vh; display: flex; justify-content:
     0% { transform: translateY(-10vh) scale(0); opacity: 1; }
     100% { transform: translateY(110vh) scale(1); opacity: 0; }
 }
+.dstat-panel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(17, 24, 39, 0.85);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    width: 320px;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.dstat-header {
+    font-size: 14px;
+    font-weight: bold;
+    color: #00ffcc;
+    margin-bottom: 15px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.dstat-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stat-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #aaa;
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    font-family: monospace; /* Font chữ kiểu terminal cho ngầu */
+}
+
+.error-box {
+    border-left: 3px solid #ff4444;
+}
+.error-box .stat-value {
+    color: #ff4444;
+}
